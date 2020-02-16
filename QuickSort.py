@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-import pdb
 def QuickSort (list, leftRange, rightRange):
-	pdb.set_trace()
 	if rightRange - leftRange < 2:
 		return 
 	for index in range(rightRange - 1, leftRange, -1):
@@ -17,4 +15,3 @@ str = input("Введите числа: ")
 list = [int(x) for x in str.split(' ')]
 QuickSort(list, 0, len(str.split(' ')))
 print(list)
-

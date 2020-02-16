@@ -23,15 +23,19 @@ for index in range(0, len(list)):
 	#если слово встречается впервый раз, то присваевываем 1
 	else:
 		dictionary[str] = dictionary[str] + 1
-
+print(dictionary)
 #2 Задание
 topWords = sorted(dictionary.items(), key = lambda count: count[1])
 #Сортируем элементы по значению
 #Нельзя перевернуть с помощью reverse(), т к кортеж - неизменяемый список
 
 str = ''
+counter = 0
 #отделяем клю(слово) от кортежа и закидываем с строку
-for index in range(len(topWords) - 1, len(topWords) - 11, -1):
+for index in range(len(topWords) - 1, -1, -1):
+	if counter == 10:
+		break
 	word = topWords[index]
 	str = str + ' ' + word[0]
+	counter = counter + 1
 print(str + '.')
