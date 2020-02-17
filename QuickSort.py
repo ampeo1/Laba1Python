@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+#./QuickSort.py
+
 def QuickSort (list, leftRange, rightRange):
 	if rightRange - leftRange < 2:
 		return 
@@ -11,7 +13,12 @@ def QuickSort (list, leftRange, rightRange):
 	QuickSort(list, index, rightRange)
 	QuickSort(list, leftRange, index)	
 
-str = input("Введите числа: ")
+str = ''
+with open('input') as file:
+	for line in file:
+		str = str + line
+
 list = [int(x) for x in str.split(' ')]
+
 QuickSort(list, 0, len(str.split(' ')))
 print(list)

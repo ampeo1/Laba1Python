@@ -29,9 +29,11 @@ def mergSort(list, leftRange, rightRange):
 	mergSort(list, mid, rightRange)
 	merg(list, leftRange, mid, rightRange)
 
+str = ''
+with open('input') as file:
+	for line in file:
+		str = str + line
 
-
-str = input("Введите числа")
 list = [int(x) for x in str.split(' ')]
 mergSort(list, 0, len(str.split(' ')))
 print(list)
