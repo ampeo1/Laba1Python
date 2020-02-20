@@ -3,6 +3,8 @@
 
 import sys
 import argparse
+import random
+import pdb
 
 def word_count(str):
 	str.lower()
@@ -38,18 +40,14 @@ def word_count(str):
 	print(' '.join(words))
 
 
-def quick_sort (list, left_range, right_range):
-	if right_range - left_range < 2:
-		return 
-	for index in range(right_range - 1, left_range, -1):
-		if list[index]  < list[index - 1]:
-			list[index], list[index - 1] = list[index - 1], list[index]
-		else:
-			quick_sort(list, index, right_range)
-			quick_sort(list, left_range, index)
-	quick_sort(list, index, right_range)
-	quick_sort(list, left_range, index)	
-
+def quick_sort(list):
+	if len(list) > 1:
+		return
+	sup_elem = random.choice(list)
+	less = [x for x in list if x < sup_elem]
+	more = [x for x in list if x > sup_elem]
+	equals = [x for x in list if x == sup_elem]
+	return quick_sort(less) + equals + quick_sort(more)
 
 def merg(list, left_range, mid, right_range):
 	index_left = left_range
@@ -113,7 +111,7 @@ if(namespace.task == 'task1'):
 	word_count(str)	
 elif(namespace.task == 'task2'):
 	list = [int(x) for x in str.split(' ')]
-	quick_sort(list, 0, len(str.split(' ')))
+	quick_sort(list)
 	print(list)
 elif(namespace.task == 'task3'):
 	list = [int(x) for x in str.split(' ')]
