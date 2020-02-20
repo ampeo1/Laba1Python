@@ -4,15 +4,15 @@
 import sys
 import argparse
 
-def wordCount(str):
+def word_count(str):
 	str.lower()
 
-	list = str.split(' ')
+	words = str.split(' ')
 #Разбиваем текст на слова
 	dictionary = {}
 
-	for index in range(0, len(list)):
-		str = list[index]
+	for index in range(0, len(words)):
+		str = words[index]
 
 		if str == '':
 			continue
@@ -29,60 +29,53 @@ def wordCount(str):
 			dictionary[str] = dictionary[str] + 1
 	print(dictionary)
 #2 Задание
-	topWords = sorted(dictionary.items(), key = lambda count: count[1])
+	words = sorted(dictionary.items(), key = lambda count: count[1])
 #Сортируем элементы по значению
 #Нельзя перевернуть с помощью reverse(), т к кортеж - неизменяемый список
 
-	str = ''
-	counter = 0
-#отделяем клю(слово) от кортежа и закидываем с строку
-	for index in range(len(topWords) - 1, -1, -1):
-		if counter == 10:
-			break
-		word = topWords[index]
-		str = str + ' ' + word[0]
-		counter = counter + 1
-	print(str + '.')
+	dictionary = dict(words[-10:])
+	words = list(dictionary.keys())
+	print(' '.join(words))
 
 
-def quickSort (list, leftRange, rightRange):
-	if rightRange - leftRange < 2:
+def quick_sort (list, left_range, right_range):
+	if right_range - left_range < 2:
 		return 
-	for index in range(rightRange - 1, leftRange, -1):
+	for index in range(right_range - 1, left_range, -1):
 		if list[index]  < list[index - 1]:
 			list[index], list[index - 1] = list[index - 1], list[index]
 		else:
-			quickSort(list, index, rightRange)
-			quickSort(list, leftRange, index)
-	quickSort(list, index, rightRange)
-	quickSort(list, leftRange, index)	
+			quick_sort(list, index, right_range)
+			quick_sort(list, left_range, index)
+	quick_sort(list, index, right_range)
+	quick_sort(list, left_range, index)	
 
 
-def merg(list, leftRange, mid, rightRange):
-	indexLeft = leftRange
-	indexRight = mid
+def merg(list, left_range, mid, right_range):
+	index_left = left_range
+	index_right = mid
 	buffer = []
-	while indexLeft < mid and indexRight < rightRange:
-		if list[indexLeft] < list[indexRight]:
-			buffer.append(list[indexLeft])
-			indexLeft = indexLeft + 1
+	while index_left < mid and index_right < right_range:
+		if list[index_left] < list[index_right]:
+			buffer.append(list[index_left])
+			index_left = index_left + 1
 		else:
-			buffer.append(list[indexRight])
-			indexRight = indexRight + 1
-	if(indexLeft < mid):
-		buffer.extend(list[indexLeft: mid])
-	elif(indexRight < rightRange):
-		buffer.extend(list[indexRight: rightRange])
-	list[leftRange: rightRange] = buffer
+			buffer.append(list[index_right])
+			index_right = index_right + 1
+	if(index_left < mid):
+		buffer.extend(list[index_left: mid])
+	elif(index_right < right_range):
+		buffer.extend(list[index_right: right_range])
+	list[left_range: right_range] = buffer
 
 
-def mergSort(list, leftRange, rightRange):
-	if leftRange + 1 >= rightRange:
+def merg_sort(list, left_range, right_range):
+	if left_range + 1 >= right_range:
 		return
-	mid = int((leftRange + rightRange) / 2)
-	mergSort(list, leftRange, mid)
-	mergSort(list, mid, rightRange)
-	merg(list, leftRange, mid, rightRange)
+	mid = int((left_range + right_range) / 2)
+	merg_sort(list, left_range, mid)
+	merg_sort(list, mid, right_range)
+	merg(list, left_range, mid, right_range)
 
 
 def fib(n):
@@ -99,7 +92,7 @@ def fib(n):
 		print(cache[1])
 
 
-def createParse():
+def create_parse():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-f', '--file', default = 'input')
 	parser.add_argument('-t', '--task', choices = ['task1', 'task2', 'task3', 'task4'], default = 'task1')
@@ -108,7 +101,7 @@ def createParse():
 
 
 
-parser = createParse()
+parser = create_parse()
 namespace = parser.parse_args(sys.argv[1:])
 
 str = ''
@@ -117,14 +110,14 @@ with open(namespace.file) as file:
 		str = str + line
 
 if(namespace.task == 'task1'):
-	wordCount(str)	
+	word_count(str)	
 elif(namespace.task == 'task2'):
 	list = [int(x) for x in str.split(' ')]
-	quickSort(list, 0, len(str.split(' ')))
+	quick_sort(list, 0, len(str.split(' ')))
 	print(list)
 elif(namespace.task == 'task3'):
 	list = [int(x) for x in str.split(' ')]
-	mergSort(list, 0, len(str.split(' ')))
+	merg_sort(list, 0, len(str.split(' ')))
 	print(list)
 elif(namespace.task == 'task4'):
 	fib(str)
