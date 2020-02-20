@@ -41,12 +41,19 @@ def word_count(str):
 
 
 def quick_sort(list):
-	if len(list) > 1:
+	if len(list) < 2:
 		return
 	sup_elem = random.choice(list)
-	less = [x for x in list if x < sup_elem]
-	more = [x for x in list if x > sup_elem]
-	equals = [x for x in list if x == sup_elem]
+	less = []
+	more = []
+	equals = []
+	for elem in list:
+		if elem < sup_elem:
+			less.append(elem)
+		elif elem > sup_elem:
+			less.append(elem)
+		elif elem == sup_elem:
+			equals.append(elem)
 	return quick_sort(less) + equals + quick_sort(more)
 
 def merg(list, left_range, mid, right_range):
