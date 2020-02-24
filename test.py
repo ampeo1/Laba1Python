@@ -40,21 +40,16 @@ def word_count(str):
 	print(' '.join(words))
 
 
-def quick_sort(list):
-	if len(list) < 2:
-		return
-	sup_elem = random.choice(list)
-	less = []
-	more = []
-	equals = []
-	for elem in list:
-		if elem < sup_elem:
-			less.append(elem)
-		elif elem > sup_elem:
-			less.append(elem)
-		elif elem == sup_elem:
-			equals.append(elem)
-	return quick_sort(less) + equals + quick_sort(more)
+def quick_sort(array):
+	if len(array) < 2:
+		return array
+	sup_arg = random.choice(array)
+	less = [x for x in array if int(x) < sup_arg]
+	more = [x for x in array if int(x) > sup_arg]
+	equals = [x for x in array if int(x) == sup_arg]
+
+	return list(quick_sort(less)) + list(equals) + list(quick_sort(more))
+
 
 def merg(list, left_range, mid, right_range):
 	index_left = left_range
@@ -83,18 +78,16 @@ def merg_sort(list, left_range, right_range):
 	merg(list, left_range, mid, right_range)
 
 
-def fib(n):
-	n = int(n)
-		
-	cache = [1, 1]
+def fib(n):	
+	cache = [0, 1]
 
-	print(cache[0])
-	print(cache[1])
+	yield cache[0]
+	yield cache[1]
 
 	for index in range(2, n):
 		cache[1] = cache[0] + cache[1]
 		cache[0] = cache[1] - cache[0]
-		print(cache[1])
+		yield cache[1]
 
 
 def create_parse():
@@ -117,12 +110,13 @@ with open(namespace.file) as file:
 if(namespace.task == 'task1'):
 	word_count(str)	
 elif(namespace.task == 'task2'):
-	list = [int(x) for x in str.split(' ')]
-	quick_sort(list)
-	print(list)
+	array = [int(x) for x in str.split(' ')]
+	array = quick_sort(array)
+	print(array)
 elif(namespace.task == 'task3'):
-	list = [int(x) for x in str.split(' ')]
-	merg_sort(list, 0, len(str.split(' ')))
-	print(list)
+	array = [int(x) for x in str.split(' ')]
+	merg_sort(array, 0, len(str.split(' ')))
+	print(array)
 elif(namespace.task == 'task4'):
-	fib(str)
+	n = int(str)
+	print(list(fib(n)))
